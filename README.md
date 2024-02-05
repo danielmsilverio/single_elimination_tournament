@@ -69,14 +69,13 @@ Projeto em python utilizando as libs:
 
 Além das ferramentas:
 - [Docker](https://www.docker.com/)
-- [Postgresql](https://www.postgresql.org/)
-
+- [Postgresql](https://www.postgresql.org/) como Banco de Dados
+- [github workflow](https://docs.github.com/en/actions/using-workflows/about-workflows) como CI
 
 ## Possíveis melhorias
 
 Em questão de infraestrutura:
 - A organização foi voltada pensando em _Clean Architecture_, porém foi utilizado só a base da ideia, precisando revisar ele.
-- Acicionar me uma CI/CD
 
 Questão de uso:
 - Adicionar um mini projeto front para melhorar a visualização do que acontece
