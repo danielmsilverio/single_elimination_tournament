@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.src.crud import match as match_crud, tournament as tournament_crud
 from app.src.schemas import match, tournament
-from app.src.core.database import Session
+from app.src.core.database import SessionLocal
 
 
 app = FastAPI(title="Sistema de torneio por chaves eliminatórias", description="Projeto para o processo seletivo da Moray")
@@ -14,9 +14,12 @@ def get_db() -> Session:
     """
     Get session to connect database.
     """
-    db = Session()
+    db: Session = SessionLocal()
     try:
         yield db
+    except:
+        db.rollback()
+        raise
     finally:
         db.close()
 

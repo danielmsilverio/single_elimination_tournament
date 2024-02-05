@@ -6,6 +6,7 @@ WORKDIR /code
 COPY ./requirements.txt /code/requirements.txt
 COPY ./alembic.ini .
 COPY ./entrypoint.sh .
+COPY ./envs ./envs
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 

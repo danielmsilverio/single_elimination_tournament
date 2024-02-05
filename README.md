@@ -24,7 +24,7 @@ Caso opite por iniciar manualmente, é necessário seguintes os seguintes pontos
 
 - Necessário ter o `python` em sua maquina, de preferencia na versão `3.10.12`
 - Possuir `PostgreSQL` instalado, de preferencia na versão `16.1`
-- Atualizar o [envs/default.env](/envs/default.env) de acordo com sua conexão ao postgres
+- Atualizar os arquivos [envs/](/envs) de acordo com sua conexão ao postgres
 
 Com essa configuração, poderá rodar os seguinters scripts:
 
@@ -42,7 +42,12 @@ uvicorn app.main:app --reload --env-file envs/default.env --host 0.0.0.0 --port 
 Com isso, já podera acessar o [localhost:80](https://localhost:80)
 
 ## Rodando os testes
-Execute o comando:
+Caso tenha opitado por uso do docker, com o container rodando, execute:
+```shell
+docker compose exec -it app pytest -v
+```
+
+Se opitou por executar sem o Docker:
 ```shell
 pytest -v
 ```

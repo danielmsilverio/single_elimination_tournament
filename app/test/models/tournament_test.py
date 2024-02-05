@@ -1,6 +1,6 @@
 from app.src.crud import tournament
 from app.src.crud import match
-from app.src.core.database import Session
+from sqlalchemy.orm import Session
 from app.src.schemas.tournament import TournamentCreate
 from app.src.schemas.match import MatchCreate
 from unittest import TestCase

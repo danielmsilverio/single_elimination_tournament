@@ -1,12 +1,11 @@
 from fastapi.testclient import TestClient
-from app.src.core.database import Session
 from app.src.crud import tournament
 from app.main import app
 from unittest import TestCase
+from sqlalchemy.orm import Session
 
 from app.src.crud import match
 from app.src.crud import tournament
-from app.src.core.database import Session
 from app.src.schemas.tournament import TournamentCreate
 from app.src.schemas.match import MatchCreate
 from app.src.models.tournament import Tournament

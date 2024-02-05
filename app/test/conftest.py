@@ -2,10 +2,12 @@ from sqlalchemy import create_engine
 from sqlalchemy_utils import create_database, database_exists, drop_database
 from dotenv import load_dotenv
 
+load_dotenv("envs/test.env", override=True)
+
 from app.src.core.configs import Settings
 import pytest
 
-POSTGRES_DB_TEST = f"{Settings().POSTGRES_DB}_test"
+POSTGRES_DB_TEST = f"{Settings().POSTGRES_DB}"
 DB_URL_TEST = f"{Settings().DB_URL_BASE}/{POSTGRES_DB_TEST}"
 
 @pytest.fixture(scope="session", autouse=True)
@@ -22,11 +24,15 @@ def fake_db():
     engine = create_engine(DB_URL_TEST)
     from app.src.models.tournament import Tournament
     from app.src.models.match import Match
-    from app.src.core.database import Session, Base
-    db = Session()
+    from app.src.core.database import SessionLocal, Base
+
+    db = SessionLocal()
     Base.metadata.create_all(engine)
     print(f"The {POSTGRES_DB_TEST} ready")
     try:
         yield db
+    except:
+        db.rollback()
+        raise
     finally:
         db.close()
