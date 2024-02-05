@@ -27,7 +27,11 @@ class GenerateMatchs:
         else:
             self.create_all_matchs()
 
-    def insert_match_create(self, left_player: PlayerMath | None, right_player: PlayerMath | None, final_match: bool = False, third_place: bool = False):
+    def insert_match_create(self,
+                            left_player: PlayerMath | None,
+                            right_player: PlayerMath | None,
+                            final_match: bool = False,
+                            third_place: bool = False):
         """
         Responsible for assembling the schema and making
         calls to create items in the database.

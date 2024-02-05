@@ -82,7 +82,7 @@ class TestMatch:
             assert player in list_names_in_matchs
 
     def test_batch_tournament_matchmaking_twelve_players(self, fake_db: Session, get_tournament: Tournament) -> None:
-        players = ["Daniel", "Mariano", "Silvério", "Rony", "Raphael", "Dudu", "Endrick", "Caio", "Weverton", "Bruno", "Zé", "Marcos"]
+        players = ["Daniel", "Mariano", "Silvério", "Rony", "Raphael", "Dudu", "Endrick", "Caio", "Luiz", "Bruno", "Zé", "Mar"]
         result = match.batch_tournament_matchmaking(fake_db, get_tournament.id, players)
 
         assert len(result) == 12
@@ -124,7 +124,7 @@ class TestMatch:
         players = ["Daniel", "Mariano", "Silvério"]
         result = match.batch_tournament_matchmaking(fake_db, get_tournament.id, players)
 
-        normal_match = next(normal_match for normal_match in result if not normal_match.final_match and not normal_match.third_place)
+        normal_match = next(match for match in result if not match.final_match and not match.third_place)
         final_match = next(final_match for final_match in result if final_match.final_match)
         third_place_match = next(third_place_match for third_place_match in result if third_place_match.third_place)
 
@@ -150,9 +150,9 @@ class TestMatch:
         players = ["Daniel", "Mariano", "Silvério", "Rony"]
         result = match.batch_tournament_matchmaking(fake_db, get_tournament.id, players)
 
-        first_normal_match = next(normal_match for normal_match in result if not normal_match.final_match and not normal_match.third_place)
-        second_normal_match = next(normal_match for normal_match in result
-                                   if not normal_match.final_match and not normal_match.third_place and normal_match.id is not first_normal_match.id)
+        first_match = next(match for match in result if not match.final_match and not match.third_place)
+        second_normal_match = next(match for match in result
+                                   if not match.final_match and not match.third_place and match.id is not first_match.id)
         final_match = next(final_match for final_match in result if final_match.final_match)
         third_place_match = next(third_place_match for third_place_match in result if third_place_match.third_place)
 
@@ -161,10 +161,10 @@ class TestMatch:
         assert third_place_match.left_player_name is None
         assert third_place_match.right_player_name is None
 
-        match_updated = match.update_match_winner(fake_db, first_normal_match.id, first_normal_match.left_player_name)
+        match_updated = match.update_match_winner(fake_db, first_match.id, first_match.left_player_name)
 
-        assert match_updated.winner == first_normal_match.left_player_name
-        assert match_updated.loser == first_normal_match.right_player_name
+        assert match_updated.winner == first_match.left_player_name
+        assert match_updated.loser == first_match.right_player_name
 
         fake_db.refresh(final_match)
         fake_db.refresh(third_place_match)

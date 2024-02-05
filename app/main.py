@@ -27,7 +27,7 @@ def get_db() -> Session:
         db.close()
 
 
-@app.get("/", summary="Boas vindas", summary="Apenas uma rota de boas vindas")
+@app.get("/", summary="Boas vindas", description="Apenas uma rota de boas vindas")
 def home():
     return {"message": "Hello World"}
 

@@ -77,8 +77,8 @@ def test_set_winner(generate_match):
 
 
 def test_get_result(fake_db, generate_tournament):
-    final_match = MatchCreate(left_player_name="Daniel", right_player_name="Silvério", final_match=True, winner="Daniel", loser="Silvério")
-    third_place_match = MatchCreate(left_player_name="Mariano", right_player_name="Rony", third_place=True, winner="Mariano", loser="Rony")
+    final_match = MatchCreate(left_player_name="Dan", right_player_name="Silv", final_match=True, winner="Dan", loser="Silv")
+    third_place_match = MatchCreate(left_player_name="M", right_player_name="Rony", third_place=True, winner="M", loser="Rony")
     match.create_tournament_matchs(fake_db, final_match, generate_tournament.id)
     match.create_tournament_matchs(fake_db, third_place_match, generate_tournament.id)
 
@@ -86,5 +86,5 @@ def test_get_result(fake_db, generate_tournament):
     response = client.get(url)
     assert response.status_code == 200
     result = response.json()
-    result_expected = {'Primeiro': 'Daniel', 'Segundo': 'Silvério', 'Terceiro': 'Mariano', 'Quarto': 'Rony'}
+    result_expected = {'Primeiro': 'Dan', 'Segundo': 'Silv', 'Terceiro': 'M', 'Quarto': 'Rony'}
     TestCase().assertDictEqual(result_expected, result)
