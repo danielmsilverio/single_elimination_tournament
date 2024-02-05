@@ -7,6 +7,7 @@ COPY ./requirements.txt /code/requirements.txt
 COPY ./alembic.ini .
 COPY ./entrypoint.sh .
 COPY ./envs ./envs
+COPY ./start_database.py .
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
