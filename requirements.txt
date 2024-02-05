@@ -9,3 +9,4 @@ asyncpg==0.29.0
 pydantic-settings==2.1.0
 alembic==1.13.1
 httpx==0.26.0
+flake8==7.0.0

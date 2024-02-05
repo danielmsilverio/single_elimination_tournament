@@ -33,6 +33,7 @@ config.set_main_option("sqlalchemy.url", settings.DB_URL)
 from app.src.models.tournament import Tournament
 from app.src.models.match import Match
 
+
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 
@@ -56,6 +57,7 @@ def run_migrations_offline() -> None:
 
     with context.begin_transaction():
         context.run_migrations()
+
 
 def run_migrations_online() -> None:
     """Run migrations in 'online' mode.

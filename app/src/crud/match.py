@@ -16,6 +16,7 @@ def get_match_by_id(db: Session, match_id: int) -> Match:
     """
     return db.query(Match).filter(Match.id == match_id).one()
 
+
 def get_matchs_by_tournameent(db: Session, tournament_id: int) -> list[Match]:
     """
     Get matchs by tournament id
@@ -26,6 +27,7 @@ def get_matchs_by_tournameent(db: Session, tournament_id: int) -> list[Match]:
     :returns list[Match()]
     """
     return db.query(Match).filter(Match.tournament_id == tournament_id).all()
+
 
 def create_tournament_matchs(db: Session, match: MatchCreate, tournament_id: int) -> Match:
     """
@@ -43,6 +45,7 @@ def create_tournament_matchs(db: Session, match: MatchCreate, tournament_id: int
     db.refresh(db_match)
     return db_match
 
+
 def batch_tournament_matchmaking(db: Session, tournament_id: int, players: list[str]) -> list[Match]:
     """
     Received a list of playes name and create all matchs to tournament
@@ -55,6 +58,7 @@ def batch_tournament_matchmaking(db: Session, tournament_id: int, players: list[
     """
     GenerateMatchs(db=db, players=players, tournament_id=tournament_id)
     return get_matchs_by_tournameent(db, tournament_id=tournament_id)
+
 
 def update_match_winner(db: Session, match_id: int, winner: str) -> Match:
     """

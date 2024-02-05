@@ -6,6 +6,7 @@ from app.src.schemas.match import MatchCreate
 from unittest import TestCase
 import pytest
 
+
 class TestTournaments:
     def test_create_tournament(self, fake_db: Session) -> None:
         new_tournament = TournamentCreate(name="Novo torneio")
@@ -45,7 +46,7 @@ class TestTournaments:
         final_match = MatchCreate(left_player_name="Daniel", right_player_name="Silvério", final_match=True, winner="Daniel", loser="Silvério")
         match.create_tournament_matchs(fake_db, final_match, new_tournament.id)
 
-        result_expected = {"Primeiro":"Daniel", "Segundo": "Silvério", "Terceiro": None, "Quarto": None}
+        result_expected = {"Primeiro": "Daniel", "Segundo": "Silvério", "Terceiro": None, "Quarto": None}
         result = tournament.get_top_of_tournament(fake_db, new_tournament.id)
         TestCase().assertDictEqual(result_expected, result)
 
@@ -56,7 +57,7 @@ class TestTournaments:
         match.create_tournament_matchs(fake_db, final_match, new_tournament.id)
         match.create_tournament_matchs(fake_db, third_place_match, new_tournament.id)
 
-        result_expected = {"Primeiro":"Daniel", "Segundo": "Silvério", "Terceiro": "Mariano", "Quarto": None}
+        result_expected = {"Primeiro": "Daniel", "Segundo": "Silvério", "Terceiro": "Mariano", "Quarto": None}
         result = tournament.get_top_of_tournament(fake_db, new_tournament.id)
         TestCase().assertDictEqual(result_expected, result)
 
@@ -67,6 +68,6 @@ class TestTournaments:
         match.create_tournament_matchs(fake_db, final_match, new_tournament.id)
         match.create_tournament_matchs(fake_db, third_place_match, new_tournament.id)
 
-        result_expected = {"Primeiro":"Daniel", "Segundo": "Silvério", "Terceiro": "Mariano", "Quarto": "Rony"}
+        result_expected = {"Primeiro": "Daniel", "Segundo": "Silvério", "Terceiro": "Mariano", "Quarto": "Rony"}
         result = tournament.get_top_of_tournament(fake_db, new_tournament.id)
         TestCase().assertDictEqual(result_expected, result)

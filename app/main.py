@@ -7,7 +7,10 @@ from app.src.schemas import match, tournament
 from app.src.core.database import SessionLocal
 
 
-app = FastAPI(title="Sistema de torneio por chaves eliminatórias", description="Projeto para o processo seletivo da Moray")
+app = FastAPI(
+    title="Sistema de torneio por chaves eliminatórias",
+    description="Projeto para o processo seletivo da Moray"
+)
 
 
 def get_db() -> Session:
@@ -17,18 +20,19 @@ def get_db() -> Session:
     db: Session = SessionLocal()
     try:
         yield db
-    except:
+    except Exception:
         db.rollback()
         raise
     finally:
         db.close()
 
-@app.get("/", description="Hello World", summary="Apenas uma rota de boas vinda")
+
+@app.get("/", summary="Boas vindas", summary="Apenas uma rota de boas vindas")
 def home():
     return {"message": "Hello World"}
 
 
-@app.post("/tournament", 
+@app.post("/tournament",
           response_model=tournament.TournamentSchema,
           status_code=HTTPStatus.CREATED,
           description="Criação de um novo torneio e retorna a sua estrutura",
@@ -38,10 +42,10 @@ def create_tournament(tournament: tournament.TournamentCreate, db: Session = Dep
 
 
 @app.post("/tournament/{tournament_id}/competitor",
-            response_model=list[match.MatchSchema],
-            status_code=HTTPStatus.CREATED,
-            description="Adiciona os competidores e já cria todas as partidas que a competição terá",
-            summary="Adiciona os competidores e cria as partidas")
+          response_model=list[match.MatchSchema],
+          status_code=HTTPStatus.CREATED,
+          description="Adiciona os competidores e já cria todas as partidas que a competição terá",
+          summary="Adiciona os competidores e cria as partidas")
 def add_competitors(tournament_id: int, players: list[str], db: Session = Depends(get_db)):
     return match_crud.batch_tournament_matchmaking(db=db, tournament_id=tournament_id, players=players)
 

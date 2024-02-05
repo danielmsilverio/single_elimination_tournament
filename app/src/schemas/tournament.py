@@ -20,10 +20,8 @@ class TournamentSchema(TournamentBase):
     """
     BaseModel of Tournament to Schema
     """
-    id: int = Field(description="id of tournament", examples=[1,2,3])
+    id: int = Field(description="id of tournament", examples=[1, 2, 3])
     matchs: list[MatchSchema] = Field(description="list of Matchs", default=[])
 
     class ConfigDict:
         orm_mode = True
-
-

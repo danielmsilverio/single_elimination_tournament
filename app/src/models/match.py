@@ -6,15 +6,16 @@ from sqlalchemy.orm import relationship
 
 from app.src.core.database import Base
 
+
 class Match(Base):
     __tablename__ = "matchs"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    left_player_name:  Mapped[str | None]
-    right_player_name:  Mapped[str | None]
-    winner:  Mapped[str | None]
+    left_player_name: Mapped[str | None]
+    right_player_name: Mapped[str | None]
+    winner: Mapped[str | None]
     loser: Mapped[str | None]
-    loser:  Mapped[str | None]
+    loser: Mapped[str | None]
     final_match: Mapped[bool]
     third_place: Mapped[bool]
 
@@ -23,7 +24,7 @@ class Match(Base):
 
     right_previous_match_id: Mapped[int | None] = mapped_column(ForeignKey("matchs.id"))
     right_previous_match: Mapped["Match"] = relationship("Match", foreign_keys=[right_previous_match_id])
-    
+
     tournament_id: Mapped[int] = mapped_column(ForeignKey("tournaments.id"))
     tournament: Mapped["Tournament"] = relationship(back_populates="matchs")
 

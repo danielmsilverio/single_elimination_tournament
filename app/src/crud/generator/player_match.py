@@ -1,13 +1,12 @@
 class PlayerMath:
     """
     Auxiliary Class to generate Match, contains name and match_id
-    
+
     :params name: int|None default None
-    :params match_id: int|None default None 
+    :params match_id: int|None default None
     """
 
-    
-    def __init__(self, name: str|None = None, match_id: int|None= None):
+    def __init__(self, name: str | None = None, match_id: int | None = None):
         self.name: str | None = name
         self.match_id: int | None = match_id
 

@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from app.src.models.tournament import Tournament
 from app.src.schemas.tournament import TournamentCreate
 
+
 def get_tournament(db: Session, tournament_id: int) -> Tournament:
     """
     Get tournament by id
@@ -11,6 +12,7 @@ def get_tournament(db: Session, tournament_id: int) -> Tournament:
     :return Tournament()
     """
     return db.query(Tournament).filter(Tournament.id == tournament_id).one()
+
 
 def create_tournament(db: Session, tournament: TournamentCreate) -> Tournament:
     """
@@ -26,6 +28,7 @@ def create_tournament(db: Session, tournament: TournamentCreate) -> Tournament:
     db.refresh(db_tournament)
     return db_tournament
 
+
 def get_top_of_tournament(db: Session, tournament_id: int) -> dict[str, str]:
     """
     Return the top four in the tournament if it is closed
@@ -37,9 +40,9 @@ def get_top_of_tournament(db: Session, tournament_id: int) -> dict[str, str]:
     tournament = get_tournament(db, tournament_id)
     final_match = next(match for match in tournament.matchs if match.final_match)
     third_place_match = next((match for match in tournament.matchs if match.third_place), None)
-    if(final_match.winner is None or (third_place_match is not None and third_place_match.winner is None)):
+    if (final_match.winner is None or (third_place_match is not None and third_place_match.winner is None)):
         raise Exception("Torneio não finalizado")
-    
+
     return {
         "Primeiro": final_match.winner,
         "Segundo": final_match.loser,

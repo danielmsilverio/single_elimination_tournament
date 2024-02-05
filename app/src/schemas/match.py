@@ -14,18 +14,20 @@ class MatchBase(BaseModel):
     left_previous_match_id: int | None = Field(default=None, description="id of the previous match", examples=[1])
     right_previous_match_id: int | None = Field(default=None, description="id of the previous match", examples=[1])
 
+
 class MatchCreate(MatchBase):
     """
     BaseModel of Match to create
     """
     pass
 
+
 class MatchSchema(MatchBase):
     """
     BaseModel of Match to Schema
     """
     id: int = Field(description="id of match", examples=[1])
-    tournament_id: int= Field(description="id of tournament", examples=[1])
+    tournament_id: int = Field(description="id of tournament", examples=[1])
 
     class ConfigDict:
         orm_mode = True

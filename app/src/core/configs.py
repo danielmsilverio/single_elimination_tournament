@@ -1,6 +1,7 @@
 from pydantic_settings import BaseSettings
 import os
 
+
 class Settings(BaseSettings):
     """
     Confs used in application
@@ -16,5 +17,5 @@ class Settings(BaseSettings):
     class ConfigDict:
         case_sensitive = True
 
-    
+
 settings = Settings()

@@ -7,7 +7,7 @@ import math
 class GenerateMatchs:
     """
     Class responsible for creating the necessary number of matches and distributing participants
-    
+
     :params db: Session
     :params players: list[str]
     :params tournament_id: int
@@ -48,7 +48,6 @@ class GenerateMatchs:
             third_place=third_place
         )
         return match.create_tournament_matchs(self.__db, match=match_create, tournament_id=self.__tournament_id)
-    
 
     def create_match_to_three_players(self):
         """
@@ -57,15 +56,14 @@ class GenerateMatchs:
         first_player = self.__players[0]
         second_player = self.__players[1]
         third_player = self.__players[2]
-        
+
         match = self.insert_match_create(left_player=first_player, right_player=second_player)
-        
+
         winner_match = PlayerMath(match.winner, match.id)
         self.insert_match_create(left_player=third_player, right_player=winner_match, final_match=True)
 
         loser_match = PlayerMath(match.loser, match.id)
         self.insert_match_create(left_player=loser_match, right_player=PlayerMath(), third_place=True)
-        
 
     def create_finals_match(self):
         """
@@ -92,12 +90,12 @@ class GenerateMatchs:
         Auxiliar function for creating matches
         """
         self.fill_participant_vacancies()
-        while(len(self.__players) > 1):
+        while (len(self.__players) > 1):
             if len(self.__players) == 2:
                 self.create_finals_match()
                 self.__players = []
             else:
-                half_length: int = int(len(self.__players)/2)
+                half_length: int = int(len(self.__players) / 2)
                 left: list[PlayerMath | None] = self.__players[0:half_length]
                 right: list[PlayerMath | None] = self.__players[half_length:]
 
@@ -105,12 +103,13 @@ class GenerateMatchs:
                 for participant_pair in zip(left, right):
                     left_player = participant_pair[0]
                     right_player = participant_pair[1]
-                    if(left_player.skippable_player()):
+
+                    if (left_player.skippable_player()):
                         next_round.append(right_player)
-                    elif(right_player.skippable_player()):
+                    elif (right_player.skippable_player()):
                         next_round.append(left_player)
                     else:
                         match = self.insert_match_create(left_player=left_player, right_player=right_player)
                         next_round.append(PlayerMath(match.winner, match.id))
-                
+
                 self.__players = next_round
